@@ -28,20 +28,31 @@ in
     };
 
     programs.emacs.init.usePackage = {
+
       haskell-mode = {
         enable = true;
         hook = [ "(haskell-mode . interactive-haskell-mode)" ];
-        bindLocal = {
-          haskell-mode-map."C-c C-h" = "haskell-hoogle-lookup-from-local";
-          haskell-cabal-mode-map."C-c C-f" = "cabal-fmt-buffer";
-        };
+        bindLocal.haskell-mode-map."C-c C-h" = "haskell-hoogle-lookup-from-local";
         config = ''
           (setq haskell-interactive-popup-errors nil)
           (setq-default flycheck-disabled-checkers '(haskell-stack-ghc))
         '';
       };
 
-      fira-code-mode.hook = [ "haskell-mode" ];
+      haskell-doc = {
+        enable = true;
+        commands = [ "haskell-doc-current-info" ];
+      };
+
+      haskell-cabal = {
+        enable = true;
+        hook = [ "(haskell-cabal-mode . cabal-fmt-on-save-mode)" ];
+      };
+
+      fira-code-mode = {
+        enable = true;
+        hook = [ "haskell-mode" ];
+      };
 
       flycheck-haskell = {
         enable = true;
